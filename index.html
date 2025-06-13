@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JRJDev - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-color: #111827;
+      --secondary-color: #2563eb;
+      --bg-color: #0a0a0a;
+      --light-color: #f9fafb;
+      --dark-color: #1f2937;
+      --text-color: #f9fafb;
+      --accent-color: #00e5ff;
+      --border-radius: 12px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --max-width: 1400px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; transition: all 0.3s ease-in-out; }
+    body { background: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+    header { background: var(--primary-color); color: #fff; padding: 1rem 2rem; box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+    .logo { font-size: 2rem; font-weight: 700; color: var(--accent-color); }
+    nav { display: flex; align-items: center; }
+    nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 600; }
+    nav a:hover { color: var(--accent-color); }
+    .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+    .menu-toggle div { width: 25px; height: 3px; background: white; margin: 4px; }
+    @media(max-width: 768px) {
+      nav { display: none; flex-direction: column; position: absolute; top: 60px; right: 20px; background: var(--primary-color); border-radius: var(--border-radius); box-shadow: var(--shadow); }
+      nav.active { display: flex; }
+      .menu-toggle { display: flex; }
+    }
+    body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(var(--accent-color) 1px, transparent 1px); background-size: 60px 60px; opacity: 0.07; z-index: 0; }
+
+    #home {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 96px 96px; /* 1 inch margin all around */
+        padding-top: 96px;
+        padding-bottom: 96px;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: auto;
+        position: relative;
+        z-index: 1;
+        gap: 50px; /* add a gap between text and image */
+    }
+    
+      .profile-wrapper {
+        position: relative;
+        width: 400px; /* you can adjust depending on your image size */
+        height: 400px;
+        margin: auto;
+      }
+      
+      .background-shape {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 360px;
+        height: 360px;
+        background: linear-gradient(135deg, var(--accent-color), #00bcd4);
+        clip-path: polygon(
+          25% 5%, 
+          75% 5%, 
+          100% 50%, 
+          75% 95%, 
+          25% 95%, 
+          0% 50%
+        );
+        border-radius: 20px;
+        z-index: 1;
+        box-shadow: var(--shadow);
+      }
+      
+      .profile-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* <-- full image display */
+        /* border: 5px solid var(--primary-color); <-- REMOVE THIS LINE */
+        border-radius: 0; /* <-- No rounded edges */
+        z-index: 2;
+      }
+      
+      
+      
+    <!-- .home-text { flex: 1; animation: fadeInLeft 1s ease; }
+    .home-text h1 { font-size: 3rem; margin-bottom: 10px; }
+    .home-text h3 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 30px; min-height: 40px; }
+    .home-text a { background: var(--accent-color); color: #000; padding: 15px 30px; border-radius: var(--border-radius); text-decoration: none; font-weight: 600; box-shadow: var(--shadow); }
+    .home-image { flex: 1; text-align: center; animation: fadeInRight 1s ease; }
+    .home-image img { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow); border: 5px solid var(--accent-color); } -->
+    @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes fadeInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+
+    section {
+      padding: 80px 96px;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .light-section { background-color: var(--light-color); color: #111; }
+    .dark-section { background-color: var(--dark-color); color: var(--text-color); }
+
+    h2 { font-size: 2rem; margin-bottom: 30px; border-bottom: 3px solid var(--accent-color); display: inline-block; padding-bottom: 5px; }
+    .projects, .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .projects img { object-fit: cover; height: 180px; }
+    .card i { margin-bottom: 15px; }
+    .card {
+        background: rgba(0, 229, 255, 0.1);  /* neon-blue transparent background */
+        border: 2px solid #00e5ff; 
+        border-radius: var(--border-radius);
+        padding: 20px;
+        box-shadow: 0 0 15px #00e5ff, 0 0 30px #00bcd4;
+        transition: all 0.3s ease-in-out;
+      }
+      
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 30px #00e5ff, 0 0 60px #00bcd4;
+      }
+      
+
+    footer { background: var(--primary-color); color: #fff; text-align: center; padding: 1.5rem 0; margin-top: 60px; font-size: 0.9rem; }
+    html { scroll-behavior: smooth; }
+
+    @media(max-width: 768px) {
+        #home {
+          flex-direction: column;
+          text-align: center;
+          padding: 96px 20px;
+          gap: 40px;
+        }
+        .home-image img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%; /* or whatever you had */
+            object-fit: cover;
+            box-shadow: var(--shadow);
+            border: 5px solid var(--accent-color);
+        }
+        
+        
+      }
+      
+
+    header {
+        background: var(--primary-color);
+        color: #fff;
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed; /* <-- fixed header for mobile too */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+      }
+      
+      /* NAVIGATION RESPONSIVE FIX */
+      nav {
+        display: flex;
+        align-items: center;
+      }
+      
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 1000;
+      }
+      
+      .menu-toggle div {
+        width: 25px;
+        height: 3px;
+        background: white;
+        margin: 4px;
+      }
+      
+      /* Mobile mode adjustments */
+      @media(max-width: 768px) {
+        nav {
+          display: none;
+          flex-direction: column;
+          position: fixed;
+          top: 60px;
+          right: 0;
+          width: 70%;
+          background: var(--primary-color);
+          border-radius: 8px 0 0 8px;
+          box-shadow: var(--shadow);
+          padding: 20px;
+        }
+        
+        nav.active {
+          display: flex;
+        }
+      
+        .menu-toggle {
+          display: flex;
+        }
+      }
+      
+      /* Back To Top button stays visible for all viewports */
+      #backToTop {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        z-index: 999;
+        background-color: var(--accent-color);
+        color: #000;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 50%;
+        box-shadow: var(--shadow);
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+        transition: all 0.3s ease-in-out;
+      }
+      
+      #backToTop:hover {
+        transform: translateY(-5px);
+        background-color: #00bcd4;
+      }
+      
+      .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 9999; 
+        padding-top: 100px; 
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        overflow: auto; 
+        background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(0,0,0,0.95));
+        backdrop-filter: blur(10px);
+      }
+      
+      
+      .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 10px;
+        box-shadow: 0 0 25px #00e5ff, 0 0 50px #00bcd4, 0 0 75px #00bcd4;
+        border: 3px solid #00e5ff;
+        background-color: rgba(0, 229, 255, 0.1); /* semi-transparent neon effect */
+      }
+      
+      
+      .close {
+        position: absolute;
+        top: 30px;
+        right: 50px;
+        color: white;
+        font-size: 50px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      
+      @media(max-width: 768px){
+        .modal-content {
+          max-width: 95%;
+          max-height: 70%;
+        }
+        .close {
+          top: 10px;
+          right: 20px;
+          font-size: 40px;
+        }
+      }
+      
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">JRJDev</div>
+  <div class="menu-toggle" id="menu-toggle"><div></div><div></div><div></div></div>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home">
+  <div class="home-text">
+    <p style="font-size: 1.5rem; margin-bottom: 10px;">Hello I'm</p>
+    <h1>John Robert</h1>
+    <h3><span id="typing"></span></h3>
+    <a href="CV.png" download>Download My CV</a>
+  </div>
+  <div class="home-image">
+    <div class="profile-wrapper">
+      <div class="background-shape"></div>
+      <img src="img/profile.jpg" alt="John Robert Profile Picture">
+    </div>
+  </div>
+  
+  
+</section>
+
+<section id="about" class="light-section">
+  <h2>About Me</h2>
+  <p>Hello! I’m John Robert, a Junior Developer with a passion for creating modern, efficient websites, solving coding challenges, and continuously growing my skills. As a recent graduate, I’m eager to apply my knowledge, learn from real-world experience, and contribute to exciting projects. My portfolio showcases my journey so far and some of the work I'm most proud of.</p>
+</section>
+
+<section id="skills" class="dark-section">
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <div class="card"><i class="fas fa-code fa-2x" style="color: var(--accent-color);"></i>
+      <h3>Front-End Development</h3>
+      <p>Mobile App: Java (Android)</p>
+      <p>Web Dev: HTML5, CSS3, Bootstrap4, jQuery, JavaScript, C# ASP.Net Core</p>
+    </div>
+    <div class="card"><i class="fas fa-database fa-2x" style="color: var(--accent-color);"></i>
+      <h3>Junior Database Admin</h3>
+      <p>Database design, queries, maintenance, backup & recovery</p>
+    </div>
+    <div class="card"><i class="fas fa-tools fa-2x" style="color: var(--accent-color);"></i>
+      <h3>Technical Support</h3>
+      <p>Software Installation & Updates</p><p>Troubleshooting Hardware Issues</p>
+    </div>
+    <div class="card"><i class="fas fa-search fa-2x" style="color: var(--accent-color);"></i>
+      <h3>OSINT</h3><p>Open-Source Intelligence Tools</p>
+    </div>
+    <div class="card"><i class="fas fa-paint-brush fa-2x" style="color: var(--accent-color);"></i>
+      <h3>Graphic Design</h3><p>Adobe Photoshop & other design tools</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="light-section"> 
+    <h2>My Projects</h2>
+    <div class="projects">
+  
+      <div class="card">
+        <img src="img/LGU RMS.png" alt="Login page of LGU RMS UI" 
+             style="width:100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer;"
+             onclick="openModal(this)">
+        <h3>LGU RMS Login page</h3>
+        <p>Developed the login page for our system in thesis, enabling both users and administrators to securely access the platform. The login functionality supports user authentication and role-based access control for system management.</p>
+      </div>
+  
+      <div class="card">
+        <img src="img/Payroll.png" alt="Payroll Calculator UI" 
+             style="width:100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer;"
+             onclick="openModal(this)">
+        <h3>Payroll Calculator</h3>
+        <p>Automates payroll computations.</p>
+      </div>
+  
+      <div class="card">
+        <img src="img/activity tracker.png" alt="Activity Tracker UI" 
+             style="width:100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer;"
+             onclick="openModal(this)">
+        <h3>Activity Tracker</h3>
+        <p>Tracks daily activities, productivity, and performance.</p>
+      </div>
+  
+      <div class="card">
+        <img src="img/Portfolio.png" alt="Portfolio Website UI" 
+             style="width:100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer;"
+             onclick="openModal(this)">
+        <h3>Portfolio Website</h3>
+        <p>Showcasing technical skills, projects, and career journey.</p>
+      </div>
+  
+      <div class="card">
+        <img src="img/student profile.png" alt="Student Profile UI" 
+             style="width:100%; border-radius: 8px; margin-bottom: 15px; cursor: pointer;"
+             onclick="openModal(this)">
+        <h3>Student Profile</h3>
+        <p>Developed a basic CRUD (Create, Read, Update, Delete) application for managing student profiles. The system allows users to add, update, view, and delete student data efficiently.</p>
+      </div>
+  
+    </div>
+  </section>
+  
+
+<section id="contact" class="dark-section">
+  <h2>Contact Me</h2>
+  <form action="https://formspree.io/f/xzzgrlzr" method="POST" style="display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: auto;">
+    <input type="text" name="name" placeholder="Your Name" required style="padding: 15px; border-radius: 8px; border: none;">
+    <input type="email" name="email" placeholder="Your Email" required style="padding: 15px; border-radius: 8px; border: none;">
+    <textarea name="message" placeholder="Your Message" rows="5" required style="padding: 15px; border-radius: 8px; border: none;"></textarea>
+    <button type="submit" style="padding: 15px; border-radius: 8px; border: none; background-color: var(--accent-color); color: #000; font-weight: bold;">Send Message</button>
+</form>
+
+</section>
+
+<footer>
+  <p>&copy; 2025 JRJDev. All rights reserved.</p>
+</footer>
+
+<button id="backToTop" title="Back to Top">&#8679;</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const text = ["Graphics Designer", "Front-end Developer", "Lifelong Learner"];
+      let count = 0, index = 0, currentText = '', letter = '';
+      (function type() {
+        if (count === text.length) count = 0;
+        currentText = text[count];
+        letter = currentText.slice(0, ++index);
+        document.getElementById('typing').textContent = letter;
+        if (letter.length === currentText.length) {
+          setTimeout(() => { index = 0; count++; setTimeout(type, 1000); }, 1500);
+        } else {
+          setTimeout(type, 100);
+        }
+      })();
+  
+      // Modal elements
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImage");
+      const captionText = document.getElementById("caption");
+      const closeBtn = document.querySelector(".close");
+  
+      // Select ALL project images dynamically
+      const projectImages = document.querySelectorAll("#projects img");
+  
+      // Loop through each project image and add event listener
+      projectImages.forEach((img) => {
+        img.addEventListener("click", function () {
+          modal.style.display = "block";
+          modalImg.src = this.src;
+          captionText.textContent = this.alt;
+        });
+      });
+  
+      // Close modal on close button
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+  
+      // Close modal when clicking outside the image
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+  
+      // Toggle Menu for mobile
+      document.getElementById("menu-toggle").onclick = function () {
+        document.getElementById("nav").classList.toggle("active");
+      };
+  
+      // Back To Top button behavior
+      window.onscroll = function () {
+        const btn = document.getElementById("backToTop");
+        if (window.scrollY > 200) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+  
+      // Smooth scroll to top
+      document.getElementById("backToTop").addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+  
+
+<!-- Modal -->
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+  </div>
+  
+  
+
+</body>
+</html>
